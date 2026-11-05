@@ -2,62 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Munnaf App</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#090914">
+<title>Munnaf Tasks</title>
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    background: #080b16;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-.card {
-    width: 90%;
-    max-width: 400px;
-    padding: 30px;
-    text-align: center;
-    border-radius: 24px;
-    background: #151a2b;
-    box-shadow: 0 0 30px #4338ca55;
-}
-
-button {
-    padding: 12px 24px;
-    border: 0;
-    border-radius: 12px;
-    background: #7c3aed;
-    color: white;
-    font-size: 16px;
-}
+:root{--bg:#080811;--panel:#121222;--panel2:#19192c;--purple:#9b6cff;--pink:#d36bff;--muted:#a5a2b8;--text:#f7f5ff;--line:#292740;--green:#5ee0ae}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#35205a 0,transparent 34%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+header{padding:24px 20px 12px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:850;font-size:21px;letter-spacing:.2px}.brand span{color:var(--purple)}.sub{font-size:12px;color:var(--muted);margin-top:3px}.avatar{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,#a46cff,#5629a8);display:grid;place-items:center;font-weight:900}
+main{padding:8px 16px 100px;max-width:650px;margin:auto}.hello{font-size:26px;font-weight:800;margin:12px 4px 4px}.date{color:var(--muted);font-size:13px;margin:0 4px 18px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat,.card{background:linear-gradient(145deg,#17172a,#10101d);border:1px solid var(--line);border-radius:19px;padding:16px}.stat small{color:var(--muted)}.num{font-size:27px;font-weight:850;margin-top:5px}.purple{color:#b99aff}
+.progress{height:7px;background:#29263c;border-radius:20px;overflow:hidden;margin-top:12px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#8655ed,#d36bff);width:0}
+.section{display:flex;align-items:center;justify-content:space-between;margin:25px 4px 12px}.section h2{font-size:17px;margin:0}.muted{color:var(--muted);font-size:12px}
+.btn{border:0;border-radius:13px;padding:12px 15px;background:linear-gradient(120deg,#8754ed,#b15df4);color:white;font-weight:750;font-size:13px}.btn.secondary{background:#24223a;border:1px solid #393450}.btn.danger{background:#482336}.task{display:flex;align-items:center;gap:12px;margin-bottom:10px}.check{width:23px;height:23px;border:1.5px solid #75639e;border-radius:8px;flex:none;background:transparent;color:white}.taskbody{flex:1;min-width:0}.tasktitle{font-weight:700;overflow-wrap:anywhere}.taskmeta{font-size:11px;color:var(--muted);margin-top:4px}.done .tasktitle{text-decoration:line-through;color:#8d899e}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#302348;color:#d5c2ff}
+input,select{width:100%;padding:13px 12px;border-radius:12px;border:1px solid #39354f;background:#0d0d19;color:white;font-size:14px;outline:none;margin:6px 0 13px}label{font-size:12px;color:#c5c0d7}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.empty{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d19ee;backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 5px calc(10px + env(safe-area-inset-bottom));z-index:5}nav button{background:none;border:0;color:var(--muted);font-size:11px;padding:6px}nav button b{display:block;font-size:19px;margin-bottom:3px}nav button.active{color:#c7aaff}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:flex-end;z-index:10}.modal.show{display:flex}.sheet{background:#151527;border:1px solid #38334f;border-radius:24px 24px 0 0;padding:22px 18px 30px;width:100%;max-height:90vh;overflow:auto}.sheet h2{margin:0 0 16px}.row{display:flex;gap:9px}.row>*{flex:1}.note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}.hidden{display:none!important}
 </style>
 </head>
-
 <body>
-
-<div class="card">
-    <h1>Welcome Munnaf!</h1>
-    <p>Your HTML App is running.</p>
-    <button onclick="hello()">Click Me</button>
-    <p id="message"></p>
-</div>
-
+<header><div><div class="brand">MUNNAF <span>TASKS</span></div><div class="sub">Plan better. Build better habits.</div></div><div class="avatar">M</div></header>
+<main>
+  <div id="home">
+    <div class="hello">Hello, Munnaf 👋</div><div class="date" id="today"></div>
+    <div class="stats">
+      <div class="stat"><small>Total tasks</small><div class="num" id="total">0</div></div>
+      <div class="stat"><small>Completed</small><div class="num purple" id="completed">0</div></div>
+      <div class="stat" style="grid-column:1/-1"><small>Today's progress</small><div class="num" id="percent">0%</div><div class="progress"><i id="bar"></i></div></div>
+    </div>
+    <div class="section"><h2>Today's tasks</h2><button class="btn" onclick="openTask()">＋ Add task</button></div>
+    <div id="taskList"></div>
+    <div class="section"><h2>Personal goal</h2><span class="tag">Private tracker</span></div>
+    <div class="card"><div class="muted">Time since your goal started</div><div class="num purple" id="goalTimer">Not started</div><div class="note">A private, non-judgmental progress tracker. You can reset and begin again whenever you choose.</div><div class="row" style="margin-top:12px"><button class="btn secondary" onclick="startGoal()">Start / Restart</button><button class="btn secondary" onclick="showPin()">Privacy PIN</button></div></div>
+  </div>
+  <div id="progressPage" class="hidden"><div class="hello">Your progress</div><div class="date">Small steps count.</div><div class="stats"><div class="stat"><small>Tasks completed</small><div class="num purple" id="allDone">0</div></div><div class="stat"><small>Active tasks</small><div class="num" id="activeCount">0</div></div></div><div class="section"><h2>Completion history</h2></div><div class="card" id="history">No completed tasks yet.</div></div>
+  <div id="settingsPage" class="hidden"><div class="hello">Settings</div><div class="date">Your app preferences</div><div class="card"><label>Reminder permission</label><p class="note">Notifications and reliable reminders while the app is closed require the Android native reminder module. This starter version saves tasks locally and shows reminders while the app is open.</p><button class="btn secondary" onclick="exportData()">Export my data</button></div><div class="card" style="margin-top:12px"><label>Privacy PIN</label><p class="note" id="pinStatus">No PIN set</p><button class="btn secondary" onclick="showPin()">Set / Change PIN</button></div></div>
+</main>
+<nav><button class="active" onclick="page('home',this)"><b>⌂</b>Home</button><button onclick="page('progressPage',this)"><b>▥</b>Progress</button><button onclick="openTask()"><b>＋</b>Add</button><button onclick="page('settingsPage',this)"><b>⚙</b>Settings</button></nav>
+<div class="modal" id="taskModal"><div class="sheet"><h2>Create reminder</h2><label>Task name</label><input id="taskName" placeholder="e.g. Study for 30 minutes"><div class="formgrid"><div><label>Start date & time</label><input id="taskTime" type="datetime-local"></div><div><label>Repeat every (minutes)</label><input id="taskInterval" type="number" min="1" value="5"></div></div><label>Priority</label><select id="taskPriority"><option>Medium</option><option>High</option><option>Low</option></select><div class="row"><button class="btn secondary" onclick="closeTask()">Cancel</button><button class="btn" onclick="saveTask()">Save task</button></div><div class="note">This version stores reminders on this phone. Background notifications will be enabled in the next Android-native build phase.</div></div></div>
+<div class="modal" id="pinModal"><div class="sheet"><h2>Privacy PIN</h2><label>Enter a 4-digit PIN</label><input id="pinInput" inputmode="numeric" maxlength="4" placeholder="••••"><div class="row"><button class="btn secondary" onclick="document.getElementById('pinModal').classList.remove('show')">Cancel</button><button class="btn" onclick="savePin()">Save PIN</button></div><div class="note">PIN is stored locally on this device. This starter PIN is an app setting, not a system-level secure vault.</div></div></div>
 <script>
-function hello() {
-    document.getElementById("message").innerText =
-        "APK is working successfully!";
-}
+const $=id=>document.getElementById(id);
+let tasks=JSON.parse(localStorage.getItem('mt_tasks')||'[]');
+let history=JSON.parse(localStorage.getItem('mt_history')||'[]');
+let goalStart=localStorage.getItem('mt_goal')||'';
+function persist(){localStorage.setItem('mt_tasks',JSON.stringify(tasks));localStorage.setItem('mt_history',JSON.stringify(history));render()}
+function page(id,btn){['home','progressPage','settingsPage'].forEach(x=>$(x).classList.toggle('hidden',x!==id));document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');render()}
+function openTask(){$('taskModal').classList.add('show');let d=new Date(Date.now()+60000);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('taskTime').value=d.toISOString().slice(0,16)}
+function closeTask(){$('taskModal').classList.remove('show')}
+function saveTask(){let title=$('taskName').value.trim(),time=new Date($('taskTime').value).getTime(),interval=Math.max(1,Number($('taskInterval').value)||5);if(!title||!Number.isFinite(time)){alert('Enter a task name and valid date/time.');return}tasks.push({id:Date.now(),title,time,interval,priority:$('taskPriority').value,done:false,count:0,lastDone:null});persist();closeTask();$('taskName').value=''}
+function completeTask(id){let t=tasks.find(x=>x.id===id);if(!t)return;t.done=true;t.count++;t.lastDone=Date.now();history.unshift({title:t.title,time:Date.now()});t.time=Date.now()+t.interval*60000;setTimeout(()=>{let x=tasks.find(a=>a.id===id);if(x){x.done=false;persist();notify('Reminder',x.title)}},t.interval*60000);persist()}
+function notify(title,body){if('Notification'in window){if(Notification.permission==='granted')new Notification(title,{body});else if(Notification.permission!=='denied')Notification.requestPermission()}}
+function render(){let today=new Date().toDateString();$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});let todays=tasks.filter(t=>new Date(t.time).toDateString()===today||!t.done);let done=tasks.reduce((a,t)=>a+t.count,0),total=tasks.length,finished=tasks.filter(t=>t.done).length,p=total?Math.round(finished/total*100):0;$('total').textContent=total;$('completed').textContent=done;$('percent').textContent=p+'%';$('bar').style.width=p+'%';$('taskList').innerHTML=tasks.length?tasks.map(t=>`<div class="card task ${t.done?'done':''}"><button class="check" onclick="completeTask(${t.id})">${t.done?'✓':''}</button><div class="taskbody"><div class="tasktitle">${escapeHtml(t.title)}</div><div class="taskmeta">${new Date(t.time).toLocaleString()} · Every ${t.interval} min · ${t.count} completed</div></div><span class="tag">${t.priority}</span><button class="btn danger" onclick="removeTask(${t.id})">×</button></div>`).join(''):'<div class="card empty">No tasks yet. Tap + Add task to begin.</div>';$('allDone').textContent=done;$('activeCount').textContent=tasks.filter(t=>!t.done).length;$('history').innerHTML=history.length?history.slice(0,30).map(h=>`<p>${escapeHtml(h.title)} <span class="muted">· ${new Date(h.time).toLocaleString()}</span></p>`).join(''):'No completed tasks yet.';$('goalTimer').textContent=goalStart?formatDuration(Date.now()-Number(goalStart)):'Not started';$('pinStatus').textContent=localStorage.getItem('mt_pin')?'PIN is set':'No PIN set'}
+function removeTask(id){if(confirm('Delete this task?')){tasks=tasks.filter(t=>t.id!==id);persist()}}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function startGoal(){if(confirm('Start or restart your personal goal timer?')){goalStart=String(Date.now());localStorage.setItem('mt_goal',goalStart);render()}}
+function formatDuration(ms){let s=Math.floor(ms/1000),d=Math.floor(s/86400);s%=86400;let h=Math.floor(s/3600);s%=3600;let m=Math.floor(s/60);return `${d}d ${h}h ${m}m`}
+function showPin(){$('pinModal').classList.add('show')}
+function savePin(){let p=$('pinInput').value;if(!/^\d{4}$/.test(p)){alert('Use exactly 4 digits.');return}localStorage.setItem('mt_pin',p);$('pinInput').value='';$('pinModal').classList.remove('show');render()}
+function exportData(){let blob=new Blob([JSON.stringify({tasks,history,goalStart},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='munnaf-tasks-backup.json';a.click();URL.revokeObjectURL(a.href)}
+render();setInterval(render,30000);
+if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
 </script>
-
-</body>
-  </html>
+</body></html>
